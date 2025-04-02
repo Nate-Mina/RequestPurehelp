@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const description = document.getElementById('problem-description').value.trim();
-        
+        const address = document.getElementById('address').value.trim();
+        const bookingTime = document.getElementById('booking-time').value;
+
         const errors = [];
         
         if (firstName.length < 2) errors.push('First name must be at least 2 characters');
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Please enter a valid email address');
         if (!/^[0-9\s\-()+]{10,}$/.test(phone)) errors.push('Please enter a valid phone number');
         if (description.length < 10) errors.push('Problem description must be at least 10 characters');
+        if (address.length < 5) errors.push('Address must be at least 5 characters');
+        if (!bookingTime) errors.push('Please select a preferred booking time');
         
         const recaptchaResponse = grecaptcha.getResponse();
         if (!recaptchaResponse) errors.push('Please complete the reCAPTCHA verification');

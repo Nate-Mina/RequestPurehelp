@@ -12,7 +12,6 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "help-form-app": "file:",
-    "yarn": "^1.22.22"
+    "help-form-app": "file:"
   }
 }
