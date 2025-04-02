@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Help Now - Pure Computers</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="/js/form.js" defer></script>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Need Help? Tell Us About It!</h1>
+    <p>Fill out the form below, and we'll get back to you as soon as possible.</p>
+
+    <form action="/submit-help-request" method="POST" id="help-form">
+        <div class="form-group">
+            <label for="first-name">First Name <span class="required-indicator">*</span></label>
+            <input type="text" id="first-name" name="first_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="last-name">Last Name <span class="required-indicator">*</span></label>
+            <input type="text" id="last-name" name="last_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="company-name">Company Name</label>
+            <input type="text" id="company-name" name="company_name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address <span class="required-indicator">*</span></label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number <span class="required-indicator">*</span></label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9\s\-()+]*" title="Enter a valid phone number">
+        </div>
+
+        <div class="form-group">
+            <label for="urgency">How urgently do you need help? <span class="required-indicator">*</span></label>
+            <select id="urgency" name="urgency" required>
+                <option value="" disabled selected>-- Please Select --</option>
+                <option value="critical">Critical / System Down</option>
+                <option value="high">High / Significant Impact</option>
+                <option value="medium">Medium / Minor Issue</option>
+                <option value="low">Low / General Inquiry</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="problem-description">Briefly describe the problem <span class="required-indicator">*</span></label>
+            <textarea id="problem-description" name="problem_description" rows="6" required></textarea>
+        </div>
+
+        <div class="form-group recaptcha-container">
+            <div class="g-recaptcha" data-sitekey="YOUR-SITE-KEY"></div>
+        </div>
+
+        <div class="form-group
