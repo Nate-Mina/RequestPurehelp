@@ -10,6 +10,7 @@ const cors = require('cors');
 const xss = require('xss');
 const rateLimit = require('express-rate-limit');
 const axios = require('axios');
+const { OAuth2Client } = require('google-auth-library'); // Added for Google login
 
 // Initialize Express App
 const app = express();
@@ -258,6 +259,29 @@ app.post('/submit-help-request', async (req, res) => {
             </body>
             </html>
         `);
+    }
+});
+
+// Add endpoint to handle Google login
+const googleClient = new OAuth2Client('YOUR_GOOGLE_CLIENT_ID'); // Replace with your Google Client ID
+
+app.post('/google-login', async (req, res) => {
+    try {
+        const { idToken } = req.body;
+        const ticket = await googleClient.verifyIdToken({
+            idToken,
+            audience: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your Google Client ID
+        });
+        const payload = ticket.getPayload();
+
+        console.log('Google user verified:', payload);
+
+        // You can add additional logic here, such as creating a session or user in your database
+
+        res.status(200).json({ message: 'Google login successful', user: payload });
+    } catch (error) {
+        console.error('Error verifying Google ID token:', error);
+        res.status(400).json({ message: 'Invalid Google ID token' });
     }
 });
 

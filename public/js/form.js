@@ -68,4 +68,46 @@ document.addEventListener('DOMContentLoaded', () => {
             setLoading(false);
         }
     });
+
+    initializeGoogleSignIn();
 });
+
+// Add Google Sign-In functionality
+function initializeGoogleSignIn() {
+    gapi.load('auth2', () => {
+        const auth2 = gapi.auth2.init({
+            client_id: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your Google Client ID
+        });
+
+        const googleSignInButton = document.getElementById('google-signin-button');
+        googleSignInButton.addEventListener('click', () => {
+            auth2.signIn().then(googleUser => {
+                const idToken = googleUser.getAuthResponse().id_token;
+                console.log('Google ID Token:', idToken);
+
+                // Send the token to the server for verification
+                fetch('/google-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ idToken }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Google login failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Server response:', data);
+                    alert('Google login successful!');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Google login failed. Please try again.');
+                });
+            });
+        });
+    });
+}

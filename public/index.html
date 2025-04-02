@@ -81,5 +81,49 @@
     </form>
 </div>
 
+<script>
+    // Google Sign-In Initialization
+    function onGoogleSignIn(googleUser) {
+        const profile = googleUser.getBasicProfile();
+        console.log('Google User Signed In:', profile.getName(), profile.getEmail());
+        // Send the token to your server for further processing
+    }
+
+    function initGoogleSignIn() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init({
+                client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com'
+            }).then(function(auth2) {
+                document.getElementById('google-signin-button').addEventListener('click', function() {
+                    auth2.signIn().then(onGoogleSignIn);
+                });
+            });
+        });
+    }
+
+    // Facebook SDK Initialization
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: 'YOUR_FACEBOOK_APP_ID',
+            cookie: true,
+            xfbml: true,
+            version: 'v16.0'
+        });
+
+        document.getElementById('facebook-signin-button').addEventListener('click', function() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', { fields: 'name,email' }, function(userInfo) {
+                        console.log('Facebook User Signed In:', userInfo.name, userInfo.email);
+                        // Send the token to your server for further processing
+                    });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, { scope: 'email' });
+        });
+    };
+</script>
+
 </body>
 </html>
